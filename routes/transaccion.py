@@ -74,7 +74,7 @@ def hacer_retiro(transaccion: Transaccion):
 
     # Verificar si hay saldo suficiente en la cuenta
     if cuenta.saldocuenta < transaccion.montotransaccion:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No hay saldo suficiente en la cuenta.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No hay saldo suficiente en la cuenta. Lo sentimos")
 
     # Validar que el saldo restante en la cuenta no sea inferior a $100.000
     saldo_minimo = 100000
