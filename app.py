@@ -5,6 +5,8 @@ from routes.persona import personasRoute
 from routes.banco import bancosRoute
 from routes.cuenta import cuentasRoute
 from routes.tipocuenta import tipocuentasRoute
+from routes.tipotransaccion import tipotransaccionRoute
+from routes.transaccion import transaccionRoute
 
 app = FastAPI()
 app.add_middleware(
@@ -18,4 +20,6 @@ app.add_middleware(
 app.include_router(personasRoute),
 app.include_router(bancosRoute),
 app.include_router(cuentasRoute),
-app.include_router(tipocuentasRoute)
+app.include_router(tipocuentasRoute),
+app.include_router(tipotransaccionRoute),
+app.include_router(transaccionRoute)

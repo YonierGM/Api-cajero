@@ -1,14 +1,16 @@
 from fastapi import APIRouter, HTTPException, status, Response
 from typing import List
 from sqlalchemy import insert, select, update, delete
-from datetime import datetime, date, timedelta
+from datetime import datetime
 
 from config.db import conn
 from schemas.cuenta import Cuenta
-from models.cuenta import cuentas
 
 #importo bancos para verificar si existe uno al momento de crear cuenta
 from models.banco import bancos
+
+from models.cuenta import cuentas
+
 
 cuentasRoute = APIRouter()
 def calcular_tiempo_transcurrido(fecha_creacion):
