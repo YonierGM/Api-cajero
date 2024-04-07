@@ -1,7 +1,7 @@
 Las operaciones a realizar serán:
 
 Eliminación de un banco:
-Se podrá eliminar un banco, siempre y cuando:
+Se podrá eliminar un banco, siempre y cuando: <br > <br >
 -el banco si exista.
 -no tenga cuentas.
 
