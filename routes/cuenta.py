@@ -69,7 +69,7 @@ def create_cuenta(cuenta: Cuenta):
     if existing_banco:
         if cuenta.tipocuentaid == 1:
             existing_cuenta_ahorros = conn.execute(
-                select(cuentas).where(cuentas.c.tipocuentaid == 1 and cuentas.c.personaid == cuenta.personaid)).first()
+                select(cuentas).where((cuentas.c.tipocuentaid == 1) & (cuentas.c.personaid == cuenta.personaid))).first()
             if existing_cuenta_ahorros:
                 tiempo_transcurrido = calcular_tiempo_transcurrido(existing_cuenta_ahorros.fechacreacion)
                 raise HTTPException(status_code=400, detail="Ya tiene una cuenta de ahorros creada anteriormente con un saldo de: " + str(existing_cuenta_ahorros.saldocuenta) + " creada hace: " + str(tiempo_transcurrido)+" fecha crea: "+str(cuenta.fechacreacion))
@@ -80,7 +80,7 @@ def create_cuenta(cuenta: Cuenta):
             # Verificar si el número total de cuentas corrientes en diferentes bancos excede 6
             cuentas_totales_corriente = conn.execute(
                 select(cuentas)
-                .where(cuentas.c.tipocuentaid == 2 and cuentas.c.personaid == cuenta.personaid)
+                .where((cuentas.c.tipocuentaid == 2) & (cuentas.c.personaid == cuenta.personaid))
             ).fetchall()
             if len(cuentas_totales_corriente) >= 6:
                 raise HTTPException(
@@ -184,9 +184,9 @@ def delete_cuenta(id: int):
             if existing_cuenta.tipocuentaid == 2:
                 cuentas_corrientes = conn.execute(
                     select(cuentas)
-                    .where(cuentas.c.tipocuentaid == 2 and
-                           cuentas.c.personaid == existing_cuenta.personaid and
-                           cuentas.c.cuentaid != existing_cuenta.cuentaid)).fetchall()
+                    .where((cuentas.c.tipocuentaid == 2) &
+                           (cuentas.c.personaid == existing_cuenta.personaid) &
+                           (cuentas.c.cuentaid != existing_cuenta.cuentaid))).fetchall()
 
                 # Itera sobre los resultados y muestra la información
                 for cuenta in cuentas_corrientes:

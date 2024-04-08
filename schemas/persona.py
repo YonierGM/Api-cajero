@@ -6,3 +6,5 @@ class Persona(BaseModel):
     apellido: str
     cedula: int
     profesion: str
+    email: str
+    passw: str

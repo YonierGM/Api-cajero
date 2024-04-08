@@ -28,7 +28,7 @@ def hacer_deposito(transaccion: Transaccion):
     if transaccion.fechatransaccion < cuenta.fechacreacion:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="La fecha de la transacción debe ser posterior a la fecha de creación de la cuenta.")
 
-    #Obtengo el banco para capturar los montos por banco
+    #Obtengo el banco para capturar los montos minimos y maximos por banco
     banco = conn.execute(select(bancos).where(bancos.c.bancoid == cuenta.bancoid)).first()
 
     # Verificar si el monto del depósito minimo es válido
@@ -83,7 +83,7 @@ def hacer_retiro(transaccion: Transaccion):
     # Obtener la fecha actual
     fecha_actual = datetime.now()
 
-    # Convertir la fecha de creación de la cuenta a datetime
+    # Convertir la fecha de creación de la cuenta a datetime (Para evitar errores al momento de calcular tiempo transcurrido)
     fecha_creacion_datetime = datetime.combine(cuenta.fechacreacion, datetime.min.time())
 
     tiempo_transcurrido = (fecha_actual - fecha_creacion_datetime).days // 365

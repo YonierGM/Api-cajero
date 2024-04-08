@@ -12,7 +12,10 @@ personas = Table(
     Column("nombre", String(255)),
     Column("apellido", String(255)),
     Column("cedula", Integer),
-    Column("profesion", String(255))
+    Column("profesion", String(255)),
+    Column("email", String(255)),
+    Column("passw", String(255))
+
 )
 
 meta.create_all(engine)

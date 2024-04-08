@@ -10,6 +10,16 @@ from models.persona import personas
 
 personasRoute = APIRouter()
 
+@personasRoute.get('/login', tags=['personas'], response_model=Persona)
+def login(email: str, passw: str):
+    login = conn.execute(personas.select().where((personas.c.email == email) & (personas.c.passw == passw))).first()
+    print(passw)
+    print(email)
+    if login:
+        return login
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Datos Erroneos")
+
 @personasRoute.get('/personas', tags=['personas'], response_model=List[Persona])
 def get_personas():
     return conn.execute(personas.select()).fetchall()
@@ -30,6 +40,8 @@ def create_persona(persona: Persona):
             "apellido": persona.apellido,
             "cedula": persona.cedula,
             "profesion": persona.profesion,
+            "email": persona.email,
+            "passw": persona.passw
         }
         result = conn.execute(insert(personas).values(new_persona))
         new_persona["personaid"] = result.inserted_primary_key[0]
@@ -49,6 +61,8 @@ def update_persona(id: int, persona: Persona):
                 apellido=persona.apellido,
                 cedula=persona.cedula,
                 profesion=persona.profesion,
+                email=persona.email,
+                passw=persona.passw
             )
             .where(personas.c.personaid == id)
         )
